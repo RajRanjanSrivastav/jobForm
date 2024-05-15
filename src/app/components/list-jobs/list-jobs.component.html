@@ -1,0 +1,49 @@
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mb-2">
+                <p><span class="border-bottom border-2 border-dark fs-2 p-2">List Of Jobs :</span></p>
+            </div>
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="min-width-sr">S No.</th>
+                                                <th scope="col" class="min-width">Post</th>
+                                                <th scope="col" class="text-end">Apply</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr *ngFor="let item of jobs; let i=index;">
+                                                <th scope="row" class="text-muted">{{i+1}}</th>
+
+                                                <td >
+                                                    <div class="form-group">
+                                                        <p class="postText">{{item}}</p>
+                                                    </div>
+                                                </td>
+                                                <td class="text-end">
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary"  [routerLink]="['/hrForm/' + i]" >Apply Now</button>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

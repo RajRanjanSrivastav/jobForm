@@ -1,0 +1,942 @@
+<section>
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col text-end">
+                <button class="btn btn-secondary" [routerLink]="['/jobList']">Job Board</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <form #appli="ngForm" (ngSubmit)="onSubmit(appli.value)">
+                            <div class="row">
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="name">Position applied for <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" name="position" ngModel required class="form-control"
+                                            id="position" placeholder="Enter Position" [(ngModel)]="jobServ.jobs[id]"
+                                            [ngModelOptions]="{standalone: true}">
+
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="salutation">Salutation <span class="text-danger">*</span></label>
+                                        <ng-select [items]="Salutation" id="salutation" bindLabel="Salutation"
+                                            placeholder="Select your Salutation" [multiple]="false" name="Salutation"
+                                            required>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="name">Name <span class="text-danger">*</span></label>
+                                        <input type="text" name="name" ngModel required class="form-control" id="name"
+                                            placeholder="Enter your name">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="fathername">Father Name <span class="text-danger">*</span></label>
+                                        <input type="text" name="fathername" ngModel required class="form-control"
+                                            id="fathername" placeholder="Enter your name">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="mothername">Mother Name <span class="text-danger">*</span></label>
+                                        <input type="text" name="mothername" ngModel required class="form-control"
+                                            id="mothername" placeholder="Enter your name">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="gender">Gender <span class="text-danger">*</span></label>
+                                        <ng-select [items]="gender" bindLabel="gender" placeholder="Select your gender"
+                                            [multiple]="false" name="gender">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="marital">Marital Status <span class="text-danger">*</span></label>
+                                        <ng-select [items]="marital" bindLabel="marital"
+                                            placeholder="Select your marital status" [multiple]="false" name="marital"
+                                            (change)="onMaritalStatusSelected($event)">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 " *ngIf="showSpouse">
+                                    <div class="form-group">
+                                        <label for="spouse">Spouse Name <span class="text-danger">*</span></label>
+                                        <input type="text" required class="form-control" id="spouse"
+                                            placeholder="Enter your spouse name" name="spouse" ngModel>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="dob">Date of Birth <span class="text-danger">*</span></label>
+                                        <input type="date" name="dob" ngModel class="form-control" id="dob" required
+                                            (change)="calculateAge($event)">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="age">Age <span class="text-danger">*</span></label>
+                                        <input type="text" required class="form-control" id="age"
+                                            placeholder="Enter your age" disabled name="age" [(ngModel)]='totalAge'
+                                            [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="email">Email address <span class="text-danger">*</span></label>
+                                        <input type="email" email required class="form-control" name="email" ngModel
+                                            id="email" placeholder="Enter your email" #email="ngModel"
+                                            [(ngModel)]="hrForm.email" [ngModelOptions]="{standalone: true}">
+
+                                    </div>
+                                    <div *ngIf="!email?.valid && (email?.dirty || email?.touched)"
+                                        class="error text-danger">
+                                        <div *ngIf="email.errors?.['required']">Email is required</div>
+                                        <div *ngIf="email.errors?.['email']">Please enter a valid email address</div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="Phonenumber">Mobile Number <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="Phonenumber" ngModel
+                                            id="Phonenumber" placeholder="Enter your mobile number" #phoneNo="ngModel"
+                                            [(ngModel)]="hrForm.phoneNum" [ngModelOptions]="{standalone: true}"
+                                            minlength="10" maxlength="10" required>
+                                    </div>
+
+                                    <div *ngIf="!phoneNo?.valid && (phoneNo?.dirty || phoneNo?.touched)"
+                                        class="error text-danger">
+                                        <div *ngIf="phoneNo.errors?.['required']">
+                                            Contact number is required
+                                        </div>
+                                        <div *ngIf="(phoneNo.errors?.['minlength'] || phoneNo.errors?.['maxlength'])">
+                                            Please enter correct number
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="file">Upload DOB Proof (pdf only upto 200 kb) <span
+                                                class="text-danger">*</span></label>
+                                        <input type="file" class="form-control-file form-control" id="file" name="file"
+                                            ngModel required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="nationality">Nationality <span class="text-danger">*</span></label>
+                                        <input type="text" required class="form-control" id="nationality"
+                                            placeholder="Enter your nationality" name="nationality" ngModel>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="expertise">Sectoral Expertise <span
+                                                class="text-danger">*</span></label>
+                                        <ng-select [items]="Expertise" bindLabel="Expertise"
+                                            placeholder="Select Sectoral Expertise" appendTo="body" [multiple]="true"
+                                            ngModel name="expertise">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="expertise">Hazard Specific Expertise <span
+                                                class="text-danger">*</span></label>
+                                        <ng-select [items]="Hazard" bindLabel="Hazard" placeholder="Select Hazards"
+                                            appendTo="body" [multiple]="true" ngModel name="Hazard">
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="address">Address for Communication</label>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <ng-container ngModelGroup="Address_0">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="addressAdd">Address</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="addressAdd"
+                                                                    [(ngModel)]="CommuniAddress.addressComm"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    id="addressAdd" placeholder="Enter your Address">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="stateAdd">State</label>
+                                                                <input type="text" class="form-control" name="stateAdd"
+                                                                    [(ngModel)]="CommuniAddress.stateAdd"
+                                                                    [ngModelOptions]="{standalone: true}" id="stateAdd"
+                                                                    placeholder="Enter your State">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="cityAdd">City</label>
+                                                                <input type="text" class="form-control" name="cityAdd"
+                                                                    [(ngModel)]="CommuniAddress.cityAdd"
+                                                                    [ngModelOptions]="{standalone: true}" id="cityAdd"
+                                                                    placeholder="Enter your City">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="districtAdd">District</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="citydistrictAdd"
+                                                                    [(ngModel)]="CommuniAddress.districtAdd"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    id="citydistrictAdd"
+                                                                    placeholder="Enter your District">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="pincodeAdd">Pincode</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="pincodeAdd"
+                                                                    [(ngModel)]="CommuniAddress.pincodeAdd"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    id="pincodeAdd" placeholder="Enter your Pincode">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="streetNo">Street No.</label>
+                                                                <input type="text" class="form-control" name="streetNo"
+                                                                    [(ngModel)]="CommuniAddress.streetNo"
+                                                                    [ngModelOptions]="{standalone: true}" id="streetNo"
+                                                                    placeholder="Enter your street number">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <input type="checkbox" class="form-check-input me-2" id="sameAsAddress"
+                                            placeholder="Enter your permanent address" name="sameAsAddress" ngModel
+                                            (change)="copyAddress($event)">
+                                        <label for="sameAsAddress">Same as the Communication Address</label>
+
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="per_address">Permanent Address</label>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <ng-container ngModelGroup="PermanentAddress_0">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="addressPer">Address</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="addressPer"
+                                                                    [(ngModel)]="PermanentAddress.addressPer"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    id="addressPer" placeholder="Enter your Address">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="statePer">State</label>
+                                                                <input type="text" class="form-control" name="statePer"
+                                                                    [(ngModel)]="PermanentAddress.statePer"
+                                                                    [ngModelOptions]="{standalone: true}" id="statePer"
+                                                                    placeholder="Enter your State">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="cityPer">City</label>
+                                                                <input type="text" class="form-control" name="cityPer"
+                                                                    [(ngModel)]="PermanentAddress.cityPer"
+                                                                    [ngModelOptions]="{standalone: true}" id="cityPer"
+                                                                    placeholder="Enter your City">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="districtPer">District</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="districtPer"
+                                                                    [(ngModel)]="PermanentAddress.districtPer"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    id="districtPer" placeholder="Enter your District">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="pincodePer">Pincode</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="pincodePer"
+                                                                    [(ngModel)]="PermanentAddress.pincodePer"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    id="pincodePer" placeholder="Enter your Pincode">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 ">
+                                                            <div class="form-group">
+                                                                <label for="streetNoPer">Street No.</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="streetNoPer"
+                                                                    [(ngModel)]="PermanentAddress.streetNoPer"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    id="streetNoPer"
+                                                                    placeholder="Enter your street number">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>Whether Applicant have Essential Qualification</label>
+                                        <div class="d-flex">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="Qualification"
+                                                    ngModel id="exampleRadio1" value="yes" checked>
+                                                <label class="form-check-label" for="exampleRadio1">
+                                                    Yes
+                                                </label>
+                                            </div>
+                                            <div class="form-check ms-4">
+                                                <input class="form-check-input" type="radio" name="Qualification"
+                                                    ngModel id="exampleRadio2" value="no">
+                                                <label class="form-check-label" for="exampleRadio2">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <hr class="hr" /> -->
+
+                            <div class="row mb-2">
+                                <div class="col col-md-8 ">
+                                    <label>Education (College education in reverse chronological order) (Pls add
+                                        rows if
+                                        required) <span class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <div class="row">
+
+                                                    <div class="col text-end p-2 ">
+                                                        <button class="btn btn-primary me-4"
+                                                            (click)="addRow('oneduDel',eduRow)">Add
+                                                            +</button>
+                                                        <!-- <button class="btn btn-danger px-4 me-4" *ngIf="oneduDel"
+                                                        (click)="delRow('oneduDel',eduRow)">Del</button> -->
+                                                    </div>
+                                                </div>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="min-width-sr">S No.</th>
+                                                            <th scope="col" class="min-width">Year</th>
+                                                            <th scope="col">Degree/Diploma</th>
+                                                            <th scope="col">University/Institution</th>
+                                                            <th scope="col" class="min-width">Division/GPA</th>
+                                                            <th scope="col" class="min-width">Subjects</th>
+                                                            <th scope="col" class="min-width">Proof</th>
+                                                            <th scope="col" class="min-width">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <ng-container ngModelGroup="education">
+
+                                                            <tr *ngFor="let item of eduRow; let i=index;">
+                                                                <th scope="row">{{this.i+1}}</th>
+                                                                <ng-container ngModelGroup="education_{{i}}">
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="text" required
+                                                                                class="form-control" id="yearGrad"
+                                                                                placeholder="Enter Year" required
+                                                                                name="gradYear" ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="text" required
+                                                                                class="form-control" id="gradDegree"
+                                                                                placeholder="Enter Degree" required
+                                                                                name="gradDegree" ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="text" required
+                                                                                class="form-control" id="university"
+                                                                                placeholder="Enter University Name"
+                                                                                required name="university" ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="text" required
+                                                                                class="form-control" id="gpa"
+                                                                                placeholder="Enter your GPA" required
+                                                                                name="gpa" ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="text" required
+                                                                                class="form-control" id="gradSub"
+                                                                                placeholder="Enter your subjects"
+                                                                                required name="gradSub" ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="file"
+                                                                                class="form-control-file form-control"
+                                                                                name="eduProof" ngModel required>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <button class="btn btn-outline-danger"
+                                                                                (click)="del(item.id,eduRow,'eduRow')"><svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-trash"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                                    <path
+                                                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                                </svg></button>
+                                                                        </div>
+                                                                    </td>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </ng-container>
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-2 mt-4">
+                                <div class="col col-md-8">
+                                    <label>Experience (in reverse chronological order) (Pls add rows if required) <span
+                                            class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span class="h5 border-bottom border-2 border-dark">Total
+                                                            Experience : <span class="h4">3 year</span></span>
+                                                    </div>
+                                                    <div class="col text-end p-2 ">
+                                                        <button class="btn btn-primary me-4"
+                                                            (click)="addRow('onexpDel',expRow)">Add
+                                                            +</button>
+                                                        <!-- <button class="btn btn-danger px-4 me-4" *ngIf="onexpDel"
+                                                        (click)="delRow('onexpDel',expRow)">Delete</button> -->
+                                                    </div>
+
+                                                </div>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="min-width-sr">S No.</th>
+                                                            <th scope="col" colspan="3" rowspan="3" class="text-center">
+                                                                Period
+                                                            </th>
+                                                            <th scope="col">Organization /
+                                                                Institution
+                                                            </th>
+                                                            <th scope="col" class="min-width">Nature of work
+                                                            </th>
+                                                            <th scope="col" class="min-width">Accomplishments</th>
+                                                            <th scope="col" class="min-width">Proof</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <ng-container ngModelGroup="experience">
+                                                            <tr *ngFor="let item of expRow; let i=index;">
+                                                                <th scope="row">{{i+1}}</th>
+                                                                <ng-container ngModelGroup="experience_{{i}}">
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="date" id="startexpDate{{i}}"
+                                                                                class="form-control" name="startexpDate"
+                                                                                ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="date" id="endexpDate{{i}}"
+                                                                                class="form-control" name="endexpDate"
+                                                                                ngModel
+                                                                                (change)="calRange($event,i,'exp')">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="min-width">
+                                                                        <div class="form-group">
+                                                                            <input type="text" readonly
+                                                                                class="form-control"
+                                                                                id="totalexpTime{{i}}"
+                                                                                placeholder="Total Time" ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="text" required
+                                                                                class="form-control" id="expOrg"
+                                                                                placeholder="Enter your Organization /
+                                                            Institution" name="expOrg" ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="text" required
+                                                                                class="form-control" id="expWork"
+                                                                                placeholder="Enter your Nature of work"
+                                                                                name="expWork" ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="text" required
+                                                                                class="form-control"
+                                                                                id="Accomplishments"
+                                                                                placeholder="Enter your Accomplishments"
+                                                                                name="expAccom" ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <div class="form-group">
+                                                                                <input type="file"
+                                                                                    class="form-control-file form-control"
+                                                                                    name="AccomplishmentsProof" ngModel
+                                                                                    required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </ng-container>
+                                                                <td>
+                                                                    <div class="form-group">
+                                                                        <button class="btn btn-outline-danger"
+                                                                            (click)="del(item.id,expRow,'expRow')"><svg
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                width="16" height="16"
+                                                                                fill="currentColor" class="bi bi-trash"
+                                                                                viewBox="0 0 16 16">
+                                                                                <path
+                                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                                <path
+                                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                            </svg></button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2 mt-4">
+                                <div class="col col-md-8">
+                                    <label>Trainings: (Pls add rows if required) <span
+                                            class="text-danger">*</span></label>
+                                </div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span class="h5 border-bottom border-2 border-dark">Total
+                                                            Experience : <span class="h4" id="totalTrainingExp">3
+                                                                year</span></span>
+                                                    </div>
+                                                    <div class="col text-end p-2 ">
+                                                        <button class="btn btn-primary me-4"
+                                                            (click)="addRow('ontrainDel',trainingRow)">Add
+                                                            +</button>
+                                                    </div>
+                                                </div>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="min-width-sr">S No.</th>
+                                                            <th scope="col" colspan="3" rowspan="3" class="text-center">
+                                                                Period
+                                                            </th>
+                                                            <th scope="col">Organization /
+                                                                Institution
+                                                            </th>
+                                                            <th scope="col">Proof
+                                                            </th>
+                                                            <th scope="col">Action</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <ng-container ngModelGroup="training">
+                                                            <tr *ngFor="let item of trainingRow; let i=index;">
+                                                                <th scope="row">{{i+1}}</th>
+                                                                <ng-container ngModelGroup="training_{{i}}">
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="date"
+                                                                                id="startTrainingDate{{i}}"
+                                                                                class="form-control"
+                                                                                name="startTrainingDate" ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="date" id="endTrainingDate{{i}}"
+                                                                                class="form-control"
+                                                                                name="endTrainingDate" ngModel
+                                                                                (change)="calRange($event,i,'Training')">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="text" readonly
+                                                                                class="form-control"
+                                                                                id="totalTrainingTime{{i}}"
+                                                                                name="totalTrainingTime" ngModel
+                                                                                placeholder="Total Time">
+                                                                        </div>
+                                                                    </td>
+
+
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="text" required
+                                                                                class="form-control" id="trainingOrg"
+                                                                                placeholder="Enter your Organization /
+                                                            Institution name" name="trainingOrg" ngModel>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <input type="file"
+                                                                                class="form-control-file form-control"
+                                                                                id="file" name="orgProof" ngModel
+                                                                                required>
+                                                                        </div>
+                                                                    </td>
+                                                                </ng-container>
+                                                                <td>
+                                                                    <div class="form-group">
+                                                                        <button class="btn btn-outline-danger"
+                                                                            (click)="del(item.id,trainingRow,'trainingRow')"><svg
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                width="16" height="16"
+                                                                                fill="currentColor" class="bi bi-trash"
+                                                                                viewBox="0 0 16 16">
+                                                                                <path
+                                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                                <path
+                                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                            </svg></button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="awards">Awards / Recognitions <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" name="awards" ngModel class="form-control" id="awards"
+                                            placeholder="Enter your experience">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="membership">Membership of Professional Bodies / Associations <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" name="membership" ngModel class="form-control"
+                                            id="membership" placeholder="Enter your experience">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="retired">Retired Government Staff - Pls indicate last drawn Pay/Pay
+                                            Band <span class="text-danger">*</span></label>
+                                        <ng-select [items]="yesNoPay" bindLabel="lastPay" placeholder="Select your Pay"
+                                            [multiple]="false" name="yesNoPay" (change)="onPayBand($event)">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6" *ngIf="showPayBand">
+                                    <div class="form-group">
+                                        <label for="payDocs">PayBand Documents<span class="text-danger">*</span></label>
+                                        <input type="file" name="payDocs" ngModel class="form-control-file form-control"
+                                            id="payDocs">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6" *ngIf="showPayBand">
+                                    <div class="form-group">
+                                        <label for="payBand">Pay Band <span class="text-danger">*</span></label>
+                                        <input type="text" name="payBand" ngModel class="form-control" id="payBand"
+                                            placeholder="Enter your Pay Band">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="photo">
+                                            Recent Passport Size Photograph (jpg/jpeg/png upto 100 kb only) <span
+                                                class="text-danger">*</span></label>
+                                        <input type="file" name="passportPhoto" ngModel
+                                            class="form-control-file form-control" id="photo">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="cv">Upload CV (pdf only upto 200 kb) <span
+                                                class="text-danger">*</span></label>
+                                        <input type="file" name="cv" ngModel class="form-control-file form-control"
+                                            id="cv">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label for="signatures">
+                                            Signatures (jpg/jpeg/png upto 100 kb only) <span
+                                                class="text-danger">*</span></label>
+                                        <input type="file" name="signatures" ngModel
+                                            class="form-control-file form-control" id="signatures">
+                                    </div>
+                                </div>
+                                <!-- refrence -->
+                                <div class="row mb-2 mt-4">
+                                    <div class="col col-md-8">
+                                        <label>Refrences: (Pls add rows if required) <span
+                                                class="text-danger">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="table-responsive">
+                                                    <div class="row">
+                                                        <div class="col text-end p-2 ">
+                                                            <button class="btn btn-primary me-4"
+                                                                (click)="addRow('onrefDel',referenceRow)">Add
+                                                                +</button>
+                                                            <!-- <button class="btn btn-danger px-4 me-4" *ngIf="ontrainDel"
+                                                            (click)="delRow('ontrainDel',trainingRow)">Delete</button> -->
+                                                        </div>
+                                                    </div>
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col" class="min-width-sr">S No.</th>
+                                                                <th scope="col">
+                                                                    Name
+                                                                </th>
+                                                                <th scope="col">
+                                                                    Designation
+                                                                </th>
+                                                                <th scope="col">Institution
+                                                                </th>
+                                                                <th scope="col">Address
+                                                                </th>
+                                                                <th scope="col">Email</th>
+                                                                <th scope="col">Phone Number</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <ng-container ngModelGroup="training">
+                                                                <tr *ngFor="let item of referenceRow; let i=index;">
+                                                                    <th scope="row">{{i+1}}</th>
+                                                                    <ng-container ngModelGroup="training_{{i}}">
+                                                                        <td>
+                                                                            <div class="form-group">
+                                                                                <input type="text"
+                                                                                    id="ReferenceName{{i}}"
+                                                                                    class="form-control"
+                                                                                    name="ReferenceName"
+                                                                                    placeholder="Enter Name" ngModel>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="form-group">
+                                                                                <input type="text"
+                                                                                    id="ReferenceDesg{{i}}"
+                                                                                    class="form-control"
+                                                                                    name="ReferenceDesg"
+                                                                                    placeholder="Enter Designation"
+                                                                                    ngModel>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="form-group">
+                                                                                <input type="text" class="form-control"
+                                                                                    id="ReferenceInst{{i}}"
+                                                                                    name="ReferenceInst" ngModel
+                                                                                    placeholder="Enter Institution ">
+                                                                            </div>
+                                                                        </td>
+
+
+                                                                        <td>
+                                                                            <div class="form-group">
+                                                                                <input type="text" required
+                                                                                    class="form-control"
+                                                                                    id="ReferenceAddress{{i}}"
+                                                                                    placeholder="Enter address"
+                                                                                    name="ReferenceAddress" ngModel>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="form-group">
+                                                                                <input type="email" class="form-control"
+                                                                                    id="ReferenceEmail{{i}}"
+                                                                                    name="ReferenceEmail"
+                                                                                    placeholder="Enter Email" ngModel
+                                                                                    required>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="form-group">
+                                                                                <input type="number"
+                                                                                    class="form-control"
+                                                                                    id="ReferenceNumber{{i}}"
+                                                                                    name="ReferenceNumber"
+                                                                                    placeholder="Enter Number" ngModel
+                                                                                    required>
+                                                                            </div>
+                                                                        </td>
+                                                                    </ng-container>
+                                                                    <td>
+                                                                        <div class="form-group">
+                                                                            <button class="btn btn-outline-danger"
+                                                                                (click)="del(item.id,referenceRow,'referenceRow')"><svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-trash"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                                    <path
+                                                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                                </svg></button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-container>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mb-2">
+                                    <div class="form-group">
+                                        <label for="sop">Upload SOP (pdf only upto 200 kb) <span
+                                                class="text-danger">*</span></label>
+                                        <input type="file" name="sop" ngModel class="form-control-file form-control"
+                                            id="sop">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="termConditions" ngModel
+                                                type="checkbox" id="acceptTerms" required>
+                                            <label class="form-check-label" for="acceptTerms">
+                                                I have carefully gone through the advertisement and I am well aware that
+                                                the information furnished above is duly supported by the documents in
+                                                respect of Essential Qualification/ Work Experience submitted by me will
+                                                also be assessed by the Selection Committee at the time of selection for
+                                                the position. The information/details provided by me are correct and
+                                                true to the best of my knowledge and no material fact having a bearing
+                                                on my selection has been suppressed/ withheld.<span
+                                                    class="text-danger">*</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="btnCont d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary btn-block px-5">Submit</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
