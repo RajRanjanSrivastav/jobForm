@@ -21,16 +21,16 @@
                                 <div class="col-12 col-md-6 ">
                                     <div class="form-group">
                                         <label for="salutation">Salutation <span class="text-danger">*</span></label>
-                                        <!-- <ng-select [items]="Salutation" id="salutation" bindLabel="Salutation"
+                                        <ng-select [items]="Salutation" id="salutation" bindLabel="Salutation"
                                             placeholder="Select your Salutation" [multiple]="false" name="Salutation"
                                             required>
                                         </ng-select>
-                                        <label for="expertise">Hazard Specific Expertise <span
+                                        <!--  <label for="expertise">Hazard Specific Expertise <span
                                                 class="text-danger">*</span></label> -->
-                                        <ng-select [items]="Salutation" id="salutation" bindLabel="Salutation"
+                                        <!-- <ng-select [items]="Salutation" id="salutation" bindLabel="Salutation"
                                             placeholder="Select your Salutation" appendTo="body" [multiple]="false"
                                             ngModel name="Salutation">
-                                        </ng-select>
+                                        </ng-select> -->
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 ">
@@ -57,11 +57,14 @@
                                 <div class="col-12 col-md-6 ">
                                     <div class="form-group">
                                         <label for="gender">Gender <span class="text-danger">*</span></label>
-
                                         <ng-select [items]="gender" id="gender" bindLabel="gender"
+                                            placeholder="Select your gender" [multiple]="false" name="gender" required>
+                                        </ng-select>
+
+                                        <!-- <ng-select [items]="gender" id="gender" bindLabel="gender"
                                             placeholder="Select your gender" appendTo="body" [multiple]="false" ngModel
                                             name="gender">
-                                        </ng-select>
+                                        </ng-select> -->
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 ">
@@ -92,8 +95,7 @@
                                     <div class="form-group">
                                         <label for="age">Age <span class="text-danger">*</span></label>
                                         <input type="text" required class="form-control" id="age"
-                                            placeholder="Enter your age" disabled name="age" [(ngModel)]='totalAge'
-                                            [ngModelOptions]="{standalone: true}">
+                                            placeholder="Enter your age" disabled name="age" [(ngModel)]='totalAge'>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 ">
@@ -101,7 +103,7 @@
                                         <label for="email">Email address <span class="text-danger">*</span></label>
                                         <input type="email" email required class="form-control" name="email" ngModel
                                             id="email" placeholder="Enter your email" #email="ngModel"
-                                            [(ngModel)]="hrForm.email" [ngModelOptions]="{standalone: true}">
+                                            [(ngModel)]="hrForm.email">
 
                                     </div>
                                     <div *ngIf="!email?.valid && (email?.dirty || email?.touched)"
@@ -116,8 +118,7 @@
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="Phonenumber" ngModel
                                             id="Phonenumber" placeholder="Enter your mobile number" #phoneNo="ngModel"
-                                            [(ngModel)]="hrForm.phoneNum" [ngModelOptions]="{standalone: true}"
-                                            minlength="10" maxlength="10" required>
+                                            [(ngModel)]="hrForm.phoneNum" minlength="10" maxlength="10" required>
                                     </div>
 
                                     <div *ngIf="!phoneNo?.valid && (phoneNo?.dirty || phoneNo?.touched)"
@@ -173,7 +174,7 @@
                                         <label for="address">Address for Communication</label>
                                         <div class="card">
                                             <div class="card-body">
-                                                <ng-container ngModelGroup="Address_0">
+                                                <ng-container ngModelGroup="Address">
                                                     <div class="row">
                                                         <div class="col-12 col-md-6 ">
                                                             <div class="form-group">
@@ -181,7 +182,6 @@
                                                                 <input type="text" class="form-control"
                                                                     name="addressAdd"
                                                                     [(ngModel)]="CommuniAddress.addressComm"
-                                                                    [ngModelOptions]="{standalone: true}"
                                                                     id="addressAdd" placeholder="Enter your Address">
                                                             </div>
                                                         </div>
@@ -189,8 +189,7 @@
                                                             <div class="form-group">
                                                                 <label for="stateAdd">State</label>
                                                                 <input type="text" class="form-control" name="stateAdd"
-                                                                    [(ngModel)]="CommuniAddress.stateAdd"
-                                                                    [ngModelOptions]="{standalone: true}" id="stateAdd"
+                                                                    [(ngModel)]="CommuniAddress.stateAdd" id="stateAdd"
                                                                     placeholder="Enter your State">
                                                             </div>
                                                         </div>
@@ -198,8 +197,7 @@
                                                             <div class="form-group">
                                                                 <label for="cityAdd">City</label>
                                                                 <input type="text" class="form-control" name="cityAdd"
-                                                                    [(ngModel)]="CommuniAddress.cityAdd"
-                                                                    [ngModelOptions]="{standalone: true}" id="cityAdd"
+                                                                    [(ngModel)]="CommuniAddress.cityAdd" id="cityAdd"
                                                                     placeholder="Enter your City">
                                                             </div>
                                                         </div>
@@ -209,7 +207,6 @@
                                                                 <input type="text" class="form-control"
                                                                     name="citydistrictAdd"
                                                                     [(ngModel)]="CommuniAddress.districtAdd"
-                                                                    [ngModelOptions]="{standalone: true}"
                                                                     id="citydistrictAdd"
                                                                     placeholder="Enter your District">
                                                             </div>
@@ -220,7 +217,6 @@
                                                                 <input type="text" class="form-control"
                                                                     name="pincodeAdd"
                                                                     [(ngModel)]="CommuniAddress.pincodeAdd"
-                                                                    [ngModelOptions]="{standalone: true}"
                                                                     id="pincodeAdd" placeholder="Enter your Pincode">
                                                             </div>
                                                         </div>
@@ -228,8 +224,7 @@
                                                             <div class="form-group">
                                                                 <label for="streetNo">Street No.</label>
                                                                 <input type="text" class="form-control" name="streetNo"
-                                                                    [(ngModel)]="CommuniAddress.streetNo"
-                                                                    [ngModelOptions]="{standalone: true}" id="streetNo"
+                                                                    [(ngModel)]="CommuniAddress.streetNo" id="streetNo"
                                                                     placeholder="Enter your street number">
                                                             </div>
                                                         </div>
@@ -254,7 +249,7 @@
                                         <label for="per_address">Permanent Address</label>
                                         <div class="card">
                                             <div class="card-body">
-                                                <ng-container ngModelGroup="PermanentAddress_0">
+                                                <ng-container ngModelGroup="PermanentAddress">
                                                     <div class="row">
                                                         <div class="col-12 col-md-6 ">
                                                             <div class="form-group">
@@ -262,7 +257,6 @@
                                                                 <input type="text" class="form-control"
                                                                     name="addressPer"
                                                                     [(ngModel)]="PermanentAddress.addressPer"
-                                                                    [ngModelOptions]="{standalone: true}"
                                                                     id="addressPer" placeholder="Enter your Address">
                                                             </div>
                                                         </div>
@@ -271,16 +265,14 @@
                                                                 <label for="statePer">State</label>
                                                                 <input type="text" class="form-control" name="statePer"
                                                                     [(ngModel)]="PermanentAddress.statePer"
-                                                                    [ngModelOptions]="{standalone: true}" id="statePer"
-                                                                    placeholder="Enter your State">
+                                                                    id="statePer" placeholder="Enter your State">
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6 ">
                                                             <div class="form-group">
                                                                 <label for="cityPer">City</label>
                                                                 <input type="text" class="form-control" name="cityPer"
-                                                                    [(ngModel)]="PermanentAddress.cityPer"
-                                                                    [ngModelOptions]="{standalone: true}" id="cityPer"
+                                                                    [(ngModel)]="PermanentAddress.cityPer" id="cityPer"
                                                                     placeholder="Enter your City">
                                                             </div>
                                                         </div>
@@ -290,7 +282,6 @@
                                                                 <input type="text" class="form-control"
                                                                     name="districtPer"
                                                                     [(ngModel)]="PermanentAddress.districtPer"
-                                                                    [ngModelOptions]="{standalone: true}"
                                                                     id="districtPer" placeholder="Enter your District">
                                                             </div>
                                                         </div>
@@ -300,7 +291,6 @@
                                                                 <input type="text" class="form-control"
                                                                     name="pincodePer"
                                                                     [(ngModel)]="PermanentAddress.pincodePer"
-                                                                    [ngModelOptions]="{standalone: true}"
                                                                     id="pincodePer" placeholder="Enter your Pincode">
                                                             </div>
                                                         </div>
@@ -310,7 +300,6 @@
                                                                 <input type="text" class="form-control"
                                                                     name="streetNoPer"
                                                                     [(ngModel)]="PermanentAddress.streetNoPer"
-                                                                    [ngModelOptions]="{standalone: true}"
                                                                     id="streetNoPer"
                                                                     placeholder="Enter your street number">
                                                             </div>
@@ -361,7 +350,7 @@
                                                 <div class="row">
 
                                                     <div class="col text-end p-2 ">
-                                                        <button class="btn btn-primary me-4"
+                                                        <button type="button" class="btn btn-primary me-4"
                                                             (click)="addRow('oneduDel',eduRow)">Add
                                                             +</button>
                                                         <!-- <button class="btn btn-danger px-4 me-4" *ngIf="oneduDel"
@@ -482,7 +471,7 @@
                                                             Experience : <span class="h4">3 year</span></span>
                                                     </div>
                                                     <div class="col text-end p-2 ">
-                                                        <button class="btn btn-primary me-4"
+                                                        <button type="button" class="btn btn-primary me-4"
                                                             (click)="addRow('onexpDel',expRow)">Add
                                                             +</button>
                                                         <!-- <button class="btn btn-danger px-4 me-4" *ngIf="onexpDel"
@@ -614,7 +603,7 @@
                                                                 year</span></span>
                                                     </div>
                                                     <div class="col text-end p-2 ">
-                                                        <button class="btn btn-primary me-4"
+                                                        <button type="button" class="btn btn-primary me-4"
                                                             (click)="addRow('ontrainDel',trainingRow)">Add
                                                             +</button>
                                                     </div>
@@ -790,7 +779,7 @@
                                                 <div class="table-responsive">
                                                     <div class="row">
                                                         <div class="col text-end p-2 ">
-                                                            <button class="btn btn-primary me-4"
+                                                            <button type="button" class="btn btn-primary me-4"
                                                                 (click)="addRow('onrefDel',referenceRow)">Add
                                                                 +</button>
                                                             <!-- <button class="btn btn-danger px-4 me-4" *ngIf="ontrainDel"

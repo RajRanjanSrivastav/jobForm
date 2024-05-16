@@ -18,7 +18,7 @@ export class NdmajobService {
 
 
   sendData(data: any): Observable<any> {
-    return this.http.post('url', data)  //replace url to api url
+    return this.http.post('https://dummy.restapiexample.com/api/v1/create', data)  //replace url to api url
       .pipe(
         catchError(this.handleError) // Pass the error handler function to catchError
       );

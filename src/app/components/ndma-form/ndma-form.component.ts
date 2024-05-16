@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from "@ng-select/ng-select";
 import { NdmajobService } from '../../services/hrJob/ndmajob.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { log } from 'console';
 
 
 @Component({
@@ -112,6 +113,16 @@ export class NdmaFormComponent implements OnInit {
   onSubmit(val: any) {
     val.position = this.id;
     console.log(val, 'aya');
+    this.jobServ.sendData(val).subscribe((e)=>{
+      if(e.status == 'success'){
+        console.log('sucess',e.data);
+      }
+      else{
+        console.log("Data not found");
+        
+      }
+      
+    })
 
   }
 
