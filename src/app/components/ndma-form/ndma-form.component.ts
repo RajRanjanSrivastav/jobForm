@@ -110,9 +110,9 @@ export class NdmaFormComponent implements OnInit {
 
   // submit form data
   onSubmit(val: any) {
-    console.log(JSON.stringify(val));
+    val.position = this.id;
     console.log(val, 'aya');
-    this.jobServ.sendData(val);
+
   }
 
 

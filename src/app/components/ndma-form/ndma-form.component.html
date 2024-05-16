@@ -13,20 +13,23 @@
                             <div class="row">
                                 <div class="col-12 col-md-6 ">
                                     <div class="form-group">
-                                        <label for="name">Position applied for <span
-                                                class="text-danger">*</span></label>
+                                        <label for="name">Position applied for<span class="text-danger">*</span></label>
                                         <input type="text" name="position" ngModel required class="form-control"
-                                            id="position" placeholder="Enter Position" [(ngModel)]="jobServ.jobs[id]"
-                                            [ngModelOptions]="{standalone: true}">
-
+                                            id="position" placeholder="Enter Position" [(ngModel)]="jobServ.jobs[id]">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 ">
                                     <div class="form-group">
                                         <label for="salutation">Salutation <span class="text-danger">*</span></label>
-                                        <ng-select [items]="Salutation" id="salutation" bindLabel="Salutation"
+                                        <!-- <ng-select [items]="Salutation" id="salutation" bindLabel="Salutation"
                                             placeholder="Select your Salutation" [multiple]="false" name="Salutation"
                                             required>
+                                        </ng-select>
+                                        <label for="expertise">Hazard Specific Expertise <span
+                                                class="text-danger">*</span></label> -->
+                                        <ng-select [items]="Salutation" id="salutation" bindLabel="Salutation"
+                                            placeholder="Select your Salutation" appendTo="body" [multiple]="false"
+                                            ngModel name="Salutation">
                                         </ng-select>
                                     </div>
                                 </div>
@@ -54,8 +57,10 @@
                                 <div class="col-12 col-md-6 ">
                                     <div class="form-group">
                                         <label for="gender">Gender <span class="text-danger">*</span></label>
-                                        <ng-select [items]="gender" bindLabel="gender" placeholder="Select your gender"
-                                            [multiple]="false" name="gender">
+
+                                        <ng-select [items]="gender" id="gender" bindLabel="gender"
+                                            placeholder="Select your gender" appendTo="body" [multiple]="false" ngModel
+                                            name="gender">
                                         </ng-select>
                                     </div>
                                 </div>
